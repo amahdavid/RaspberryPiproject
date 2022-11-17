@@ -1,0 +1,4 @@
+/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/doxygen.dir
+/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/udp_client.dir
+/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/rebuild_cache.dir

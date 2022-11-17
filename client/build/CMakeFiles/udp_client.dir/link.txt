@@ -1,0 +1,1 @@
+/usr/bin/cc -fsanitize=address -fsanitize=bounds CMakeFiles/udp_client.dir/src/main.c.o CMakeFiles/udp_client.dir/src/error.c.o CMakeFiles/udp_client.dir/src/conversion.c.o CMakeFiles/udp_client.dir/src/copy.c.o -o udp_client 

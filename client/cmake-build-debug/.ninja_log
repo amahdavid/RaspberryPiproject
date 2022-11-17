@@ -1,0 +1,14 @@
+# ninja log v5
+2826	2865	1667703401272210321	udp_client	164bd125bd31c52c
+57	466	1667703398872164693	CMakeFiles/udp_client.dir/src/main.c.o	1ebe5c41d5788418
+64	241	1667089352323778356	CMakeFiles/udp_client.dir/src/conversion.c.o	ce1797b043415012
+1	48	0	CMakeFiles/doxygen	6b2229017627d4d5
+57	2826	1667703401232209561	CMakeFiles/udp_client.dir/src/copy.c.o	d441ea65493f7b9a
+51	190	1667092813153176951	CMakeFiles/udp_client.dir/src/error.c.o	675a857da5d126b2
+0	53	0	CMakeFiles/doxygen	12dbc23da64135
+0	53	0	/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/doxygen	12dbc23da64135
+54	227	1668656792939484263	CMakeFiles/udp_client.dir/src/error.c.o	fee1b16299a1fef3
+54	281	1668656792993484076	CMakeFiles/udp_client.dir/src/conversion.c.o	ad3e67c11b0c06cf
+53	559	1668656793271483112	CMakeFiles/udp_client.dir/src/main.c.o	4bde354e4d54ba56
+54	2847	1668656795559475180	CMakeFiles/udp_client.dir/src/copy.c.o	7cb23d601251f982
+2847	2901	1668656795612474996	udp_client	164bd125bd31c52c
