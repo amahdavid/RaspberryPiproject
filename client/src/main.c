@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     // option processing is also when socket connection is made.
     options_process(&opts);
 
-    // If valid information for client and sever, send data to server.
+    // If valid information for client and server, send data to server.
     if(opts.ip_client && opts.ip_receiver)
     {
         // Custom copy method for sending data packet to server.

@@ -52,21 +52,21 @@ add_compile_options("-Wall"
         "-Wshift-overflow"
         "-Wwrite-strings")
 
-if (${SANITIZE})
-    add_compile_options("-fsanitize=address")
-    add_compile_options("-fsanitize=undefined")
-    add_compile_options("-fsanitize-address-use-after-scope")
-    add_compile_options("-fstack-protector-all")
-    add_compile_options("-fdelete-null-pointer-checks")
-    add_compile_options("-fno-omit-frame-pointer")
-
-    if (NOT APPLE)
-        add_compile_options("-fsanitize=leak")
-    endif ()
-
-    add_link_options("-fsanitize=address")
-    add_link_options("-fsanitize=bounds")
-endif ()
+#if (${SANITIZE})
+#    add_compile_options("-fsanitize=address")
+#    add_compile_options("-fsanitize=undefined")
+#    add_compile_options("-fsanitize-address-use-after-scope")
+#    add_compile_options("-fstack-protector-all")
+#    add_compile_options("-fdelete-null-pointer-checks")
+#    add_compile_options("-fno-omit-frame-pointer")
+#
+#    if (NOT APPLE)
+#        add_compile_options("-fsanitize=leak")
+#    endif ()
+#
+#    add_link_options("-fsanitize=address")
+#    add_link_options("-fsanitize=bounds")
+#endif ()
 
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
     #    add_compile_options("-O2")

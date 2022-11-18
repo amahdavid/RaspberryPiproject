@@ -9,7 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/socket.h>
-#include <wiringPi.h>
+#include "wiringPi.h"
 #define BUF_LEN 1024
 #define DEFAULT_PORT 5020
 #define LedPIn 0
@@ -112,12 +112,12 @@ static void process_packet(const struct data_packet * dataPacket, struct server_
         // LED light on
         digitalWrite(LedPIn, LOW);
         printf("....Led on\n");
-        delay(500);
+        delay(1500);
 
         // LED light off if packet received
         digitalWrite(LedPIn, HIGH);
         printf("....led off\n");
-        delay(500);
+        delay(1500);
     }
 
 }

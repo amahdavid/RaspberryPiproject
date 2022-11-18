@@ -2,15 +2,7 @@
 2847	2901	1668656795612474996	udp_client	164bd125bd31c52c
 53	559	1668656793271483112	CMakeFiles/udp_client.dir/src/main.c.o	4bde354e4d54ba56
 54	281	1668656792993484076	CMakeFiles/udp_client.dir/src/conversion.c.o	ad3e67c11b0c06cf
-0	53	0	CMakeFiles/doxygen	12dbc23da64135
+1	56	0	CMakeFiles/doxygen	12dbc23da64135
 54	2847	1668656795559475180	CMakeFiles/udp_client.dir/src/copy.c.o	7cb23d601251f982
 54	227	1668656792939484263	CMakeFiles/udp_client.dir/src/error.c.o	fee1b16299a1fef3
-0	53	0	/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/doxygen	12dbc23da64135
-1	262	0	CMakeFiles/doxygen	12dbc23da64135
-1	262	0	/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/doxygen	12dbc23da64135
-0	64	0	CMakeFiles/doxygen	12dbc23da64135
-0	64	0	/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/doxygen	12dbc23da64135
-1	60	0	CMakeFiles/doxygen	12dbc23da64135
-1	60	0	/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/doxygen	12dbc23da64135
-0	56	0	CMakeFiles/doxygen	12dbc23da64135
-0	56	0	/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/doxygen	12dbc23da64135
+1	56	0	/home/chika/Documents/a4/client/cmake-build-debug/CMakeFiles/doxygen	12dbc23da64135

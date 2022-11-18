@@ -132,7 +132,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Custom command for CMakeFiles/doxygen
 
-build CMakeFiles/doxygen | ${cmake_ninja_workdir}CMakeFiles/doxygen: CUSTOM_COMMAND Doxyfile.doxygen ../include/conversion.h ../include/error.h ../include/copy.h
+build CMakeFiles/doxygen | ${cmake_ninja_workdir}CMakeFiles/doxygen: CUSTOM_COMMAND Doxyfile.doxygen
   COMMAND = cd /home/chika/Documents/a4/client && /home/chika/Downloads/CLion-2022.2.3/clion-2022.2.3/bin/cmake/linux/bin/cmake -E make_directory /home/chika/Documents/a4/client/cmake-build-debug && /usr/bin/doxygen /home/chika/Documents/a4/client/cmake-build-debug/Doxyfile.doxygen
   DESC = Generating Doxygen documentation for udp_client
 
