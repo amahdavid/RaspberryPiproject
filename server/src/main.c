@@ -102,22 +102,22 @@ static void process_packet(const struct data_packet * dataPacket, struct server_
             printf("Data: %s \n", dataPacket->data);
         }
 //        // since this processes a packet we put this here since we already know we have a packet
-//        int failure = -1;
-//        if(wiringPiSetup() == failure){
-//            printf("setup wiringPi failed :C ");
-//            options_process_close(failure);
-//        }
-//        pinMode(LedPIn, OUTPUT);
-//
-//        // LED light on
-//        digitalWrite(LedPIn, LOW);
-//        printf("....Led on\n");
-//        delay(500);
-//
-//        // LED light off if packet received
-//        digitalWrite(LedPIn, HIGH);
-//        printf("....led off\n");
-//        delay(500);
+        int failure = -1;
+        if(wiringPiSetup() == failure){
+            printf("setup wiringPi failed :C ");
+            options_process_close(failure);
+        }
+        pinMode(LedPIn, OUTPUT);
+
+        // LED light on
+        digitalWrite(LedPIn, LOW);
+        printf("....Led on\n");
+        delay(500);
+
+        // LED light off if packet received
+        digitalWrite(LedPIn, HIGH);
+        printf("....led off\n");
+        delay(500);
     }
 
 }
