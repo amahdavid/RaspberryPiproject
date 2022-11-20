@@ -9,7 +9,7 @@ set(CMAKE_C_STANDARD 17)
 
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
-set(SOURCE_LIST ${SOURCE_DIR}/main.c ${SOURCE_DIR}/error.c ${SOURCE_DIR}/conversion.c ${SOURCE_DIR}/copy.c)
+set(SOURCE_LIST ${SOURCE_DIR}/main.c ${SOURCE_DIR}/error.c ${SOURCE_DIR}/conversion.c ${SOURCE_DIR}/copy.c src/deppPitches.h src/coffinPitches.h)
 set(HEADER_LIST ${INCLUDE_DIR}/conversion.h ${INCLUDE_DIR}/error.h ${INCLUDE_DIR}/copy.h)
 set(SANITIZE TRUE)
 

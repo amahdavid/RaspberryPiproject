@@ -10,11 +10,17 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include "wiringPi.h"
+#include "softTone.h"
+#include "deppPitches.h"
+#include "coffinPitches.h"
+
 #define BUF_LEN 1024
 #define DEFAULT_PORT 5020
+
 #define LedPIn 0
+#define BuzPin    0
 
-
+const int songspeed = 1.5;
 
 struct options
 {
@@ -101,12 +107,37 @@ static void process_packet(const struct data_packet * dataPacket, struct server_
             printf("Seq: %d \n", dataPacket->sequence_flag); // check to see if the seq number was just currently received
             printf("Data: %s \n", dataPacket->data);
         }
+
+        char depp = 'depp';
+        if(dataPacket->data == depp){
+            for (int i = 0; i < sizeof (notes); ++i) {
+                int wait = duration[i] * songspeed;
+                softToneWrite(BuzPin, notes[i]);
+                delay(wait);
+            }
+        }
+        int coffin = 'coffin';
+        if(dataPacket->data == coffin){
+            for (int i = 0; i < sizeof(melody); ++i) {
+                int noteDur = 750 / noteDurations[i];
+                softToneWrite(BuzPin, melody[i]);
+
+                int pauseBtwNotes = noteDur * 1.30;
+                delay(pauseBtwNotes);
+            }
+        }
 //        // since this processes a packet we put this here since we already know we have a packet
         int failure = -1;
         if(wiringPiSetup() == failure){
-            printf("setup wiringPi failed :C ");
+            printf("setup wiringPi failed :(");
             options_process_close(failure);
         }
+
+        if(softToneCreate(BuzPin) == -1){
+            printf("setup software failed :(\n");
+            options_process_close(failure);
+        }
+
         pinMode(LedPIn, OUTPUT);
 
         // LED light on
@@ -119,7 +150,6 @@ static void process_packet(const struct data_packet * dataPacket, struct server_
         printf("....led off\n");
         delay(1500);
     }
-
 }
 
 /**
