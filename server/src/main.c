@@ -18,7 +18,7 @@
 #define DEFAULT_PORT 5020
 
 #define LedPIn 0
-#define BuzPin    0
+#define BuzPin 1
 
 const int songspeed = 1.5;
 
@@ -71,14 +71,24 @@ int main(int argc, char *argv[])
     // If server IP is given, run loop to listen to self.
     if(opts.ip_server)
     {
+        int failure = -1;
+        if(wiringPiSetup() == failure){
+            printf("setup wiringPi failed :(");
+            return EXIT_FAILURE;
+        }
+
+        if(softToneCreate(BuzPin) == -1){
+            printf("setup software failed :(\n");
+            return EXIT_FAILURE;
+        }
         running = 1;
         // Continues loop to keep listening to self.
         while(running)
         {
             read_bytes(opts.fd_in, &serverInformation);
             dataPacket = dp_deserialize(serverInformation.bytes_read_from_socket, serverInformation.struct_message_data);
-            process_packet(dataPacket, &serverInformation);
             send_ack_packet(dataPacket, &serverInformation.from_addr, opts.fd_in);
+            process_packet(dataPacket, &serverInformation);
         }
     }
     cleanup(&opts, &serverInformation);
@@ -107,48 +117,28 @@ static void process_packet(const struct data_packet * dataPacket, struct server_
             printf("Seq: %d \n", dataPacket->sequence_flag); // check to see if the seq number was just currently received
             printf("Data: %s \n", dataPacket->data);
         }
+//        // since this processes a packet we put this here since we already know we have a packet
+//        pinMode(LedPIn, OUTPUT);
+//
+//        // LED light on
+//        digitalWrite(LedPIn, LOW);
+//        printf("....Led on\n");
+//        delay(1500);
+//
+//        // LED light off if packet received
+//        digitalWrite(LedPIn, HIGH);
+//        printf("....led off\n");
+//        delay(1500);
 
-        char depp = 'depp';
-        if(dataPacket->data == depp){
+        //boolean hasPlayed = true;
+        if(digitalRead(BuzPin) == 0){
+            delay(100);
             for (int i = 0; i < sizeof (notes); ++i) {
                 int wait = duration[i] * songspeed;
                 softToneWrite(BuzPin, notes[i]);
                 delay(wait);
             }
         }
-        int coffin = 'coffin';
-        if(dataPacket->data == coffin){
-            for (int i = 0; i < sizeof(melody); ++i) {
-                int noteDur = 750 / noteDurations[i];
-                softToneWrite(BuzPin, melody[i]);
-
-                int pauseBtwNotes = noteDur * 1.30;
-                delay(pauseBtwNotes);
-            }
-        }
-//        // since this processes a packet we put this here since we already know we have a packet
-        int failure = -1;
-        if(wiringPiSetup() == failure){
-            printf("setup wiringPi failed :(");
-            options_process_close(failure);
-        }
-
-        if(softToneCreate(BuzPin) == -1){
-            printf("setup software failed :(\n");
-            options_process_close(failure);
-        }
-
-        pinMode(LedPIn, OUTPUT);
-
-        // LED light on
-        digitalWrite(LedPIn, LOW);
-        printf("....Led on\n");
-        delay(1500);
-
-        // LED light off if packet received
-        digitalWrite(LedPIn, HIGH);
-        printf("....led off\n");
-        delay(1500);
     }
 }
 

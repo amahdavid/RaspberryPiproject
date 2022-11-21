@@ -26,3 +26,11 @@ void options_process_close(int result_number) {
         exit(EXIT_FAILURE);
     }
 }
+
+void setUpFailure(int result_number) {
+    if(result_number == -1)
+    {
+        printf("Could setup wiringPi\n");
+        exit(EXIT_FAILURE);
+    }
+}

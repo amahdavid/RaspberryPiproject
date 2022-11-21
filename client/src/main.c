@@ -9,10 +9,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "wiringPi.h"
 #include <bits/types/struct_timeval.h>
+#include <bits/types/sig_atomic_t.h>
 
 #define BUF_SIZE 1024
 #define DEFAULT_PORT 5020
+#define ButtonPin 1
 
 // Tracking Ip and port information for client and ser server.
 struct options
@@ -25,6 +28,7 @@ struct options
 };
 
 // Prototypes of functions.
+static volatile sig_atomic_t running;   // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 static void options_init(struct options *opts);
 static void parse_arguments(int argc, char *argv[], struct options *opts);
 static void options_process(struct options *opts);
@@ -32,6 +36,20 @@ static void cleanup(const struct options *opts);
 
 int main(int argc, char *argv[])
 {
+    char *buffer;
+    ssize_t bytesRead;
+    uint8_t *bytes;
+    size_t size;
+    int sequence = 1;
+
+    buffer = malloc(BUF_SIZE);
+    // Special data type for
+    struct data_packet dataPacket;
+
+    // dynamic memory for data packet to be sent over to server.
+    memset(&dataPacket, 0, sizeof(struct data_packet)); // NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
+
+
     // Initiating our custom struct.
     struct options opts;
 
@@ -45,7 +63,39 @@ int main(int argc, char *argv[])
     if(opts.ip_client && opts.ip_receiver)
     {
         // Custom copy method for sending data packet to server.
-        copy(STDIN_FILENO, opts.fd_in,  opts.server_addr);
+        //copy(STDIN_FILENO, opts.fd_in,  opts.server_addr);
+        if(wiringPiSetup() == -1){
+            setupFailure(-1);
+        }
+        running = 1;
+        pinMode(ButtonPin, INPUT);
+        while (running){
+            if(digitalRead(ButtonPin) == 1)
+            {
+                printf("play music\n");
+                dataPacket.data_flag = 1;
+                // Ack flag set to 0
+                dataPacket.ack_flag = 0;
+                // Alternate sequence number
+                sequence = !sequence;
+                dataPacket.sequence_flag = sequence;
+                // Get data
+                buffer[bytesRead-1] = '\0';
+                // Dynamic memory for data to send and fill with what was read into the buffer.
+                dataPacket.data = malloc(BUF_SIZE);
+                dataPacket.data = buffer;
+
+                // Serialize struct
+                bytes = dp_serialize(&dataPacket, &size);
+                // Send to server by using Socket FD.
+                write_bytes(opts.fd_in, bytes, size, opts.server_addr);
+                // Read socket FD until response from server is available, deserialize packet info and
+                //  display response.
+                read_bytes(opts.fd_in, bytes, size, opts.server_addr, sequence);
+                process_response();
+
+            }
+        }
     }
 
     // Clean up memory from option struct pointer.

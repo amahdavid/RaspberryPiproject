@@ -114,22 +114,22 @@ static void write_bytes(int fd, const uint8_t *bytes, size_t size, struct sockad
 static void process_response(void) {
     printf("Received Ack \n");
 
-    int failure = -1;
-    if(wiringPiSetup() == failure){
-        printf("setup wiringPi failed :C ");
-        options_process_close(failure);
-    }
-    pinMode(LedPIn, OUTPUT);
-
-    // LED light on
-    digitalWrite(LedPIn, LOW);
-    printf("....Led on\n");
-    delay(1500);
-
-    // LED light off if packet received
-    digitalWrite(LedPIn, HIGH);
-    printf("....led off\n");
-    delay(1500);
+//    int failure = -1;
+//    if(wiringPiSetup() == failure){
+//        printf("setup wiringPi failed :C ");
+//        options_process_close(failure);
+//    }
+//    pinMode(LedPIn, OUTPUT);
+//
+//    // LED light on
+//    digitalWrite(LedPIn, LOW);
+//    printf("....Led on\n");
+//    delay(1500);
+//
+//    // LED light off if packet received
+//    digitalWrite(LedPIn, HIGH);
+//    printf("....led off\n");
+//    delay(1500);
 }
 
 /**
