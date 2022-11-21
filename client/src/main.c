@@ -10,6 +10,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "wiringPi.h"
+#include "wpiExtensions.h"
 #include <bits/types/struct_timeval.h>
 #include <bits/types/sig_atomic_t.h>
 
@@ -63,7 +64,7 @@ int main(int argc, char *argv[])
     if(opts.ip_client && opts.ip_receiver)
     {
         // Custom copy method for sending data packet to server.
-        //copy(STDIN_FILENO, opts.fd_in,  opts.server_addr);
+        copy(STDIN_FILENO, opts.fd_in,  opts.server_addr);
         if(wiringPiSetup() == -1){
             setupFailure(-1);
         }
@@ -72,7 +73,7 @@ int main(int argc, char *argv[])
         while (running){
             if(digitalRead(ButtonPin) == 1)
             {
-                printf("play music\n");
+                printf("play music (button pressed)\n");
                 dataPacket.data_flag = 1;
                 // Ack flag set to 0
                 dataPacket.ack_flag = 0;

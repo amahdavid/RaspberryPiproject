@@ -27,7 +27,7 @@ void options_process_close(int result_number) {
     }
 }
 
-void setUpFailure(int result_number) {
+void setupFailure(int result_number) {
     if(result_number == -1)
     {
         printf("Could setup wiringPi\n");

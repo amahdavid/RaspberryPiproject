@@ -1,12 +1,13 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.16.3)
 
 project(udp_client
         VERSION 0.0.1
         DESCRIPTION ""
         LANGUAGES C)
 
-set(CMAKE_C_STANDARD 17)
+#set(CMAKE_C_STANDARD 17)
 
+#set(CMAKE_C_FLAGS "-lwiringPi")
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(SOURCE_LIST ${SOURCE_DIR}/main.c ${SOURCE_DIR}/error.c ${SOURCE_DIR}/conversion.c ${SOURCE_DIR}/copy.c)

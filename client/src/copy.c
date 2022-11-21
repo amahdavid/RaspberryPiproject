@@ -13,11 +13,11 @@
 #define BUF_SIZE 1024
 #define LedPIn 0
 
-static uint8_t *dp_serialize(const struct data_packet *x, size_t *size);
-static struct data_packet *dp_deserialize(ssize_t nRead, char * data_buffer);
-static void write_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr);
-static struct data_packet * read_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr, int seq);
-static void process_response();
+uint8_t *dp_serialize(const struct data_packet *x, size_t *size);
+struct data_packet *dp_deserialize(ssize_t nRead, char * data_buffer);
+void write_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr);
+struct data_packet * read_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr, int seq);
+void process_response();
 
 /**
  * Function to send data packet from client to server.
@@ -92,7 +92,7 @@ void copy(int from_fd, int to_fd, struct sockaddr_in server_addr)
  * @param size the size of bytes to read.
  * @param server_addr Network address of the server to send to.
  */
-static void write_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr)
+void write_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr)
 {
 
     ssize_t nWrote;
@@ -111,7 +111,7 @@ static void write_bytes(int fd, const uint8_t *bytes, size_t size, struct sockad
  * Display ACK/SEQ of the data packet sent over.
  * @param dataPacket the data packet to make UDP reliable and hold data.
  */
-static void process_response(void) {
+void process_response(void) {
     printf("Received Ack \n");
 
 //    int failure = -1;
@@ -140,7 +140,7 @@ static void process_response(void) {
  * @param server_addr the network address of the server.
  * @return Data packet pointer of deserialized packet.
  */
-static struct data_packet * read_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr, int seq)
+struct data_packet * read_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr, int seq)
 {
     struct sockaddr from_addr;
     char data[BUF_SIZE];
@@ -171,7 +171,7 @@ static struct data_packet * read_bytes(int fd, const uint8_t *bytes, size_t size
  * @param size Size of the data packet.
  * @return Serialized data packet to send to server.
  */
-static uint8_t *dp_serialize(const struct data_packet *x, size_t *size)
+uint8_t *dp_serialize(const struct data_packet *x, size_t *size)
 {
 
     uint8_t *bytes;
@@ -217,7 +217,7 @@ static uint8_t *dp_serialize(const struct data_packet *x, size_t *size)
  * @param data_buffer Data  buffer to read from.
  * @return
  */
-static struct data_packet *dp_deserialize(ssize_t nRead, char * data_buffer)
+struct data_packet *dp_deserialize(ssize_t nRead, char * data_buffer)
 {
     struct data_packet * dataPacketRecieved = malloc(sizeof(struct data_packet));
     size_t count;

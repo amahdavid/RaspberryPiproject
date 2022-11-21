@@ -20,10 +20,10 @@ struct data_packet {
  * @param server_addr Socket address of destination address.
  */
 void copy(int from_fd, int to_fd, struct sockaddr_in server_addr);
-static uint8_t *dp_serialize(const struct data_packet *x, size_t *size);
-static struct data_packet *dp_deserialize(ssize_t nRead, char * data_buffer);
-static void write_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr);
-static struct data_packet * read_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr, int seq);
-static void process_response();
+uint8_t *dp_serialize(const struct data_packet *x, size_t *size);
+struct data_packet *dp_deserialize(ssize_t nRead, char * data_buffer);
+void write_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr);
+struct data_packet * read_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in server_addr, int seq);
+void process_response();
 
 #endif //OPEN_COPY_H
