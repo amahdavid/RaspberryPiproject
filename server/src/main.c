@@ -9,6 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/socket.h>
+#include <stdbool.h>
 #include "wiringPi.h"
 #include "softTone.h"
 #include "deppPitches.h"
@@ -72,15 +73,15 @@ int main(int argc, char *argv[])
     if(opts.ip_server)
     {
         int failure = -1;
-        if(wiringPiSetup() == failure){
-            printf("setup wiringPi failed :(");
-            return EXIT_FAILURE;
-        }
-
-        if(softToneCreate(BuzPin) == -1){
-            printf("setup software failed :(\n");
-            return EXIT_FAILURE;
-        }
+//        if(wiringPiSetup() == failure){
+//            printf("setup wiringPi failed :(");
+//            return EXIT_FAILURE;
+//        }
+//
+//        if(softToneCreate(BuzPin) == -1){
+//            printf("setup software failed :(\n");
+//            return EXIT_FAILURE;
+//        }
         running = 1;
         // Continues loop to keep listening to self.
         while(running)
@@ -130,7 +131,7 @@ static void process_packet(const struct data_packet * dataPacket, struct server_
 //        printf("....led off\n");
 //        delay(1500);
 
-        //boolean hasPlayed = true;
+        int hasPlayed = true;
         if(digitalRead(BuzPin) == 0){
             delay(100);
             for (int i = 0; i < sizeof (notes); ++i) {

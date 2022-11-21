@@ -7,7 +7,7 @@ project(udp_client
 
 #set(CMAKE_C_STANDARD 17)
 
-#set(CMAKE_C_FLAGS "-lwiringPi")
+set(CMAKE_C_FLAGS "-lwiringPi")
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(SOURCE_LIST ${SOURCE_DIR}/main.c ${SOURCE_DIR}/error.c ${SOURCE_DIR}/conversion.c ${SOURCE_DIR}/copy.c)
@@ -54,33 +54,31 @@ add_compile_options("-Wall"
         "-Wshift-overflow"
         "-Wwrite-strings")
 
-if (${SANITIZE})
-    add_compile_options("-fsanitize=address")
-    add_compile_options("-fsanitize=undefined")
-    add_compile_options("-fsanitize-address-use-after-scope")
-    add_compile_options("-fstack-protector-all")
-    add_compile_options("-fdelete-null-pointer-checks")
-    add_compile_options("-fno-omit-frame-pointer")
-
-    if (NOT APPLE)
-        add_compile_options("-fsanitize=leak")
-    endif ()
-
-    add_link_options("-fsanitize=address")
-    add_link_options("-fsanitize=bounds")
-endif ()
+#if (${SANITIZE})
+#    add_compile_options("-fsanitize=address")
+#    add_compile_options("-fsanitize=undefined")
+#    add_compile_options("-fsanitize-address-use-after-scope")
+#    add_compile_options("-fstack-protector-all")
+#    add_compile_options("-fdelete-null-pointer-checks")
+#    add_compile_options("-fno-omit-frame-pointer")
+#
+#    if (NOT APPLE)
+#        add_compile_options("-fsanitize=leak")
+#    endif ()
+#
+#    add_link_options("-fsanitize=address")
+#    add_link_options("-fsanitize=bounds")
+#endif ()
 
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
     #    add_compile_options("-O2")
     add_compile_options("-Wcast-align"
             "-Wunsuffixed-float-constants"
-            "-Warith-conversion"
             "-Wcast-align=strict"
             "-Wunsafe-loop-optimizations"
             "-Wvector-operation-performance"
             "-Walloc-zero"
             "-Wtrampolines"
-            "-Wtsan"
             "-Wformat-overflow=2"
             "-Wformat-signedness"
             "-Wjump-misses-init"
