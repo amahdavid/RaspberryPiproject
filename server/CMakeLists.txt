@@ -7,6 +7,7 @@ project(udp_server
 
 #set(CMAKE_C_STANDARD 17)
 
+set(CMAKE_C_FLAGS "-lwiringPi")
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(SOURCE_LIST ${SOURCE_DIR}/main.c ${SOURCE_DIR}/error.c ${SOURCE_DIR}/conversion.c ${SOURCE_DIR}/copy.c src/deppPitches.h src/coffinPitches.h)
@@ -72,13 +73,11 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
     #    add_compile_options("-O2")
     add_compile_options("-Wcast-align"
             "-Wunsuffixed-float-constants"
-            "-Warith-conversion"
             "-Wcast-align=strict"
             "-Wunsafe-loop-optimizations"
             "-Wvector-operation-performance"
             "-Walloc-zero"
             "-Wtrampolines"
-            "-Wtsan"
             "-Wformat-overflow=2"
             "-Wformat-signedness"
             "-Wjump-misses-init"

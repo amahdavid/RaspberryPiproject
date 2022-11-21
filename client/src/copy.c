@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <netinet/in.h>
 #include "wiringPi.h"
+#include "wpiExtensions.h"
 
 
 #define BUF_SIZE 1024
