@@ -219,15 +219,15 @@ static void options_process(struct options *opts)
         }
 
         // Setting wait time for data packet exchange.
-        struct timeval timeout;
-        timeout.tv_sec = 10;
-        timeout.tv_usec = 0;
+        //struct timeval timeout;
+//        timeout.tv_sec = 10;
+//        timeout.tv_usec = 0;
 
         // Setting socket options for initiated socket FD and its reception/send time.
-        setsockopt(opts->fd_in, SOL_SOCKET, SO_RCVTIMEO, &timeout,
-                   sizeof timeout);
-        setsockopt(opts->fd_in, SOL_SOCKET, SO_SNDTIMEO, &timeout,
-                   sizeof timeout);
+//        setsockopt(opts->fd_in, SOL_SOCKET, SO_RCVTIMEO, &timeout,
+//                   sizeof timeout);
+//        setsockopt(opts->fd_in, SOL_SOCKET, SO_SNDTIMEO, &timeout,
+//                   sizeof timeout);
 
         // Assigning address name to the socket FD.
         bindResult = bind(opts->fd_in, (struct sockaddr *)&addr, sizeof(struct sockaddr_in));
