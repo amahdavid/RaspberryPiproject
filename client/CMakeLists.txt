@@ -7,7 +7,7 @@ project(udp_client
 
 #set(CMAKE_C_STANDARD 17)
 
-set(CMAKE_C_FLAGS "-lwiringPi")
+#set(CMAKE_C_FLAGS "-lwiringPi")
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(SOURCE_LIST ${SOURCE_DIR}/main.c ${SOURCE_DIR}/error.c ${SOURCE_DIR}/conversion.c ${SOURCE_DIR}/copy.c)

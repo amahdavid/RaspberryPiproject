@@ -16,6 +16,7 @@
 
 #define BUF_SIZE 1024
 #define DEFAULT_PORT 5020
+#define LedPin 0
 #define ButtonPin 1
 
 // Tracking Ip and port information for client and ser server.
@@ -64,16 +65,20 @@ int main(int argc, char *argv[])
     if(opts.ip_client && opts.ip_receiver)
     {
         // Custom copy method for sending data packet to server.
-        copy(STDIN_FILENO, opts.fd_in,  opts.server_addr);
+//        copy(STDIN_FILENO, opts.fd_in,  opts.server_addr);
         if(wiringPiSetup() == -1){
             setupFailure(-1);
         }
         running = 1;
         pinMode(ButtonPin, INPUT);
+        pinMode(LedPin, OUTPUT);
+        digitalWrite(LedPin, HIGH);
+        printf("before button pressed\n");
         while (running){
-            if(digitalRead(ButtonPin) == 1)
+            if(digitalRead(ButtonPin) == 0)
             {
                 printf("play music (button pressed)\n");
+                digitalWrite(LedPin, LOW);
                 dataPacket.data_flag = 1;
                 // Ack flag set to 0
                 dataPacket.ack_flag = 0;
@@ -94,7 +99,7 @@ int main(int argc, char *argv[])
                 //  display response.
                 read_bytes(opts.fd_in, bytes, size, opts.server_addr, sequence);
                 process_response();
-
+                digitalWrite(LedPin, HIGH);
             }
         }
     }

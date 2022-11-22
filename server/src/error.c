@@ -19,3 +19,19 @@ _Noreturn void fatal_message(const char *file, const char *func, const size_t li
     fprintf(stderr, "Error (%s @ %s:%zu) - %s\n", file, func, line, msg);  // NOLINT(cert-err33-c)
     exit(exit_code);                                                               // NOLINT(concurrency-mt-unsafe)
 }
+
+void setupFailure(int result_number) {
+    if(result_number == -1)
+    {
+        printf("Could setup wiringPi\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+void softToneFailure(int result_number) {
+    if(result_number == -1)
+    {
+        printf("Could setup soft tone create\n");
+        exit(EXIT_FAILURE);
+    }
+}

@@ -12,7 +12,6 @@
 
 
 #define BUF_SIZE 1024
-#define LedPIn 0
 
 uint8_t *dp_serialize(const struct data_packet *x, size_t *size);
 struct data_packet *dp_deserialize(ssize_t nRead, char * data_buffer);
@@ -114,23 +113,6 @@ void write_bytes(int fd, const uint8_t *bytes, size_t size, struct sockaddr_in s
  */
 void process_response(void) {
     printf("Received Ack \n");
-
-//    int failure = -1;
-//    if(wiringPiSetup() == failure){
-//        printf("setup wiringPi failed :C ");
-//        options_process_close(failure);
-//    }
-//    pinMode(LedPIn, OUTPUT);
-//
-//    // LED light on
-//    digitalWrite(LedPIn, LOW);
-//    printf("....Led on\n");
-//    delay(1500);
-//
-//    // LED light off if packet received
-//    digitalWrite(LedPIn, HIGH);
-//    printf("....led off\n");
-//    delay(1500);
 }
 
 /**
