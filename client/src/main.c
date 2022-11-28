@@ -17,7 +17,8 @@
 #define BUF_SIZE 1024
 #define DEFAULT_PORT 5020
 #define LedPin 0
-#define ButtonPin 1
+#define PlayButton 1
+#define StopButton 4
 
 // Tracking Ip and port information for client and ser server.
 struct options
@@ -65,19 +66,46 @@ int main(int argc, char *argv[])
     if(opts.ip_client && opts.ip_receiver)
     {
         // Custom copy method for sending data packet to server.
-//        copy(STDIN_FILENO, opts.fd_in,  opts.server_addr);
+        //copy(STDIN_FILENO, opts.fd_in,  opts.server_addr);
         if(wiringPiSetup() == -1){
             setupFailure(-1);
         }
         running = 1;
-        pinMode(ButtonPin, INPUT);
+        pinMode(PlayButton, INPUT);
         pinMode(LedPin, OUTPUT);
         digitalWrite(LedPin, HIGH);
         printf("before button pressed\n");
         while (running){
-            if(digitalRead(ButtonPin) == 0)
+            if(digitalRead(PlayButton) == 0)
             {
                 printf("play music (button pressed)\n");
+                digitalWrite(LedPin, LOW);
+                dataPacket.data_flag = 1;
+                // Ack flag set to 0
+                dataPacket.ack_flag = 0;
+                // Alternate sequence number
+                sequence = !sequence;
+                dataPacket.sequence_flag = sequence;
+                // Get data
+                buffer[bytesRead-1] = '\0';
+                // Dynamic memory for data to send and fill with what was read into the buffer.
+                dataPacket.data = malloc(BUF_SIZE);
+                dataPacket.data = buffer;
+
+                // Serialize struct
+                bytes = dp_serialize(&dataPacket, &size);
+                // Send to server by using Socket FD.
+                write_bytes(opts.fd_in, bytes, size, opts.server_addr);
+                // Read socket FD until response from server is available, deserialize packet info and
+                //  display response.
+                read_bytes(opts.fd_in, bytes, size, opts.server_addr, sequence);
+                process_response();
+                digitalWrite(LedPin, HIGH);
+            }
+
+            if(digitalRead(StopButton) == 0)
+            {
+                printf("stop music (button pressed)\n");
                 digitalWrite(LedPin, LOW);
                 dataPacket.data_flag = 1;
                 // Ack flag set to 0

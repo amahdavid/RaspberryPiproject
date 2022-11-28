@@ -21,7 +21,7 @@
 #define LedPIn 0
 // should always be 0 that's why song was not playing
 #define BuzPin 0
-#define ButtonPin 1
+#define StopButton 1
 
 const int songspeed = 1.5;
 int songPlayed = 0;
@@ -72,6 +72,8 @@ static void options_process_close(int result_number);
 
 static void playSong(void);
 
+static void stopSong(void);
+
 int main(int argc, char *argv[]) {
     struct options opts;
     struct server_information serverInformation;
@@ -119,7 +121,21 @@ static void playSong(void) {
         delay(wait);
     }
     softToneStop(BuzPin);
+    stopSong();
+}
 
+static void stopSong(void){
+
+    int failure = -1;
+    if(wiringPiSetup() == -1)
+    {
+        setupFailure(failure);
+    }
+
+    if(softToneCreate(BuzPin) == -1){
+        softToneFailure(failure);
+    }
+    softToneStop(BuzPin);
 }
 
 /**
