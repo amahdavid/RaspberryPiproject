@@ -18,7 +18,6 @@
 #define DEFAULT_PORT 5020
 #define LedPin 0
 #define PlayButton 1
-#define StopButton 4
 
 // Tracking Ip and port information for client and ser server.
 struct options
@@ -103,32 +102,6 @@ int main(int argc, char *argv[])
                 digitalWrite(LedPin, HIGH);
             }
 
-            if(digitalRead(StopButton) == 0)
-            {
-                printf("stop music (button pressed)\n");
-                digitalWrite(LedPin, LOW);
-                dataPacket.data_flag = 1;
-                // Ack flag set to 0
-                dataPacket.ack_flag = 0;
-                // Alternate sequence number
-                sequence = !sequence;
-                dataPacket.sequence_flag = sequence;
-                // Get data
-                buffer[bytesRead-1] = '\0';
-                // Dynamic memory for data to send and fill with what was read into the buffer.
-                dataPacket.data = malloc(BUF_SIZE);
-                dataPacket.data = buffer;
-
-                // Serialize struct
-                bytes = dp_serialize(&dataPacket, &size);
-                // Send to server by using Socket FD.
-                write_bytes(opts.fd_in, bytes, size, opts.server_addr);
-                // Read socket FD until response from server is available, deserialize packet info and
-                //  display response.
-                read_bytes(opts.fd_in, bytes, size, opts.server_addr, sequence);
-                process_response();
-                digitalWrite(LedPin, HIGH);
-            }
         }
     }
 
@@ -180,7 +153,7 @@ static void parse_arguments(int argc, char *argv[], struct options *opts)
                 break;
             }
 
-            // For setting IP of server.
+                // For setting IP of server.
             case 'o':
             {
                 if (inet_addr(optarg) == ( in_addr_t)(-1)) {
@@ -191,7 +164,7 @@ static void parse_arguments(int argc, char *argv[], struct options *opts)
                 break;
             }
 
-            // For changing port number.
+                // For changing port number.
             case 'p':
             {
                 opts->port_receiver = parse_port(optarg, 10); // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)

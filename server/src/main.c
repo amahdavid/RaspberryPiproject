@@ -20,10 +20,9 @@
 
 #define LedPIn 0
 // should always be 0 that's why song was not playing
-#define BuzPin 0
-#define StopButton 1
+int BuzPin = 0;
 
-const int songspeed = 1.5;
+const int songSpeed = (int) 1.30;
 int songPlayed = 0;
 
 struct options {
@@ -72,7 +71,6 @@ static void options_process_close(int result_number);
 
 static void playSong(void);
 
-static void stopSong(void);
 
 int main(int argc, char *argv[]) {
     struct options opts;
@@ -93,8 +91,8 @@ int main(int argc, char *argv[]) {
             dataPacket = dp_deserialize(serverInformation.bytes_read_from_socket,
                                         serverInformation.struct_message_data);
             // test this and see which one is faster originally we send the ack and then we process the packet
-            process_packet(dataPacket, &serverInformation);
             send_ack_packet(dataPacket, &serverInformation.from_addr, opts.fd_in);
+            process_packet(dataPacket, &serverInformation);
         }
     }
     cleanup(&opts, &serverInformation);
@@ -115,26 +113,13 @@ static void playSong(void) {
     printf("music being played\n");
 
     delay(100);
-    for (int i = 0; i < sizeof(notes); ++i) {
-        int wait = duration[i] * songspeed;
-        softToneWrite(BuzPin, notes[i]);
-        delay(wait);
+    for (int thisNote = 0; thisNote < sizeof(melody); thisNote++) {
+        int noteDuration = 750 / noteDurations[thisNote];
+        softToneWrite(BuzPin, melody[thisNote]);
+        int pauseBetweenNotes = noteDuration * songSpeed;
+        delay(pauseBetweenNotes);
     }
-    softToneStop(BuzPin);
-    stopSong();
-}
-
-static void stopSong(void){
-
-    int failure = -1;
-    if(wiringPiSetup() == -1)
-    {
-        setupFailure(failure);
-    }
-
-    if(softToneCreate(BuzPin) == -1){
-        softToneFailure(failure);
-    }
+    BuzPin = 0;
     softToneStop(BuzPin);
 }
 
