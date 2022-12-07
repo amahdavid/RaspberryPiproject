@@ -1,2 +1,2 @@
 # Project exclude paths
-/server/cmake-build-debug/
+/source/server/cmake-build-debug/
